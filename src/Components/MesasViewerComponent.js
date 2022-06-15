@@ -12,11 +12,10 @@ export const MesasViewerComponent = ({setMesas, mesas, setError, error, setDomin
 
 
 
-    console.log("test");
     {Array.isArray(mesas) ?
             mesas.map(element =>{
                 return(    
-                <article className="mesas animate__animated animate__bounce" key={element.id}>
+                <article className="mesas" key={element.id}>
 
                     <div className="mesa-info">
                     <Button style={{cursor: "default"}} variant="contained" disableElevation>
