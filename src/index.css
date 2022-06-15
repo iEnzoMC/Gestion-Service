@@ -176,3 +176,101 @@ hr{
 .form-addmesa > input[type="submit"]:hover{
   background-color: rgb(5, 181, 55);
 }
+
+
+/* PAGINA CONFIGMENU */
+
+
+.contenerConfigMenu{
+  width: 100%;
+  height: 100%;
+
+}
+
+.formularioConfigMenu{
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  height: auto;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 9px;
+  text-align: center;
+  color: #e6db74;
+  background: rgb(19, 47, 76);
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  
+}
+
+
+.divisionConfigMenu{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom: 1px solid #3d3d3d;
+  margin-bottom: 15px;
+}
+
+.divisionConfigMenu input{
+  border-radius: 9px;
+  padding: 5px;
+  background-color: #011b3a;
+  color: #d1defa;
+  margin-bottom: 10px;
+}
+
+
+.iconaddConfigMenu{
+  margin-left: 5px !important;
+  height: 25px !important;
+  width: 30px !important;
+}
+
+.divisionConfigMenu > textarea {
+  text-align: center;
+  background-color: #011b3a;
+  color: #d1defa;
+  padding: 20px;
+  border-radius: 9px;
+  margin-bottom: 10px;
+}
+
+.formularioConfigMenu > input[type='number']{
+  text-align: center;
+  background-color: #011b3a;
+  color: #d1defa;
+  margin-bottom: 10px;
+  border-radius: 9px;
+  padding: 5px;
+
+}
+.formularioConfigMenu > input[type='submit']{
+  text-align: center;
+  background-color: rgb(102, 187, 106);
+  color: #d1defa;
+  margin-bottom: 10px;
+  border-radius: 9px;
+  padding: 5px;
+
+}
+
+.formularioConfigMenu > input[type='submit']:hover{
+  background-color: rgba(102, 187, 106, 0.562);
+}
+
+.hoverConfigMenu:hover{
+  background-color: #1a191942;
+
+}
+
+.testt{
+  display: flex;
+  flex-direction: row;
+}
+
+.botonEliminarConfigMenu{
+  padding: 4px!important;
+  border-radius: 9px !important;
+  margin-left: 5px !important;
+  margin-bottom: 10px!important;
+}

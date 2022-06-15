@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { LSConnection } from '../helper/LSConnection';
 import QRCode from "react-qr-code";
+import { Link } from 'react-router-dom';
 
 // HACER ESTE COMPONENTE
 
@@ -48,8 +49,6 @@ export const RemovemesaComponent = ({setMesas, mesas, setError, error, id, setDo
 
     setEdit(!edit)
 
-    console.log("yes");
-
   }
 
 
@@ -66,11 +65,11 @@ export const RemovemesaComponent = ({setMesas, mesas, setError, error, id, setDo
 
       
       {edit === true &&
-          <div className='animate__animated animate__backInDown' style={{marginTop: "10px"}}>
+          <div style={{marginTop: "10px"}}>
               <hr style={{marginBottom: "10px"}} />
               <div style={{display: "flex", flexDirection: "column", textAlign:"center"}}>
-                <span><QRCode size={132} value={urlMesa} /></span>
-                <a href='/' style={{display: "block"}}>Click para imprimir</a>
+                <span><QRCode size={132} value={dominio+urlMesa} /></span>
+                <Link to={urlMesa}> Click para ver plantilla </Link>
               </div>
          </div>
 

@@ -5,6 +5,9 @@ import { AddmesaComponent } from './Components/AddmesaComponent';
 import { MesasViewerComponent } from './Components/MesasViewerComponent';
 import { Errors } from './helper/Errors';
 import { LSConnection } from './helper/LSConnection';
+import { Link, Route, Routes } from 'react-router-dom';
+import Configmenu from './Pages/Configmenu';
+import Mesas from './Pages/Mesa'
 
 
 function App() {
@@ -43,10 +46,11 @@ function App() {
 
 
     {/* CONTENEDOR */}
+
+
     <div className="contener">
-
-
-        <MesasViewerComponent
+    <Routes>
+        <Route index element={<MesasViewerComponent
             setMesas={setMesas}
             mesas={mesas}
             setError={setError}
@@ -54,7 +58,13 @@ function App() {
             
             setDominio={setDominio}
             dominio={dominio}
-        />
+        />} />
+        <Route path='menuconfig' element={<Configmenu/>}/>
+        <Route path='*' element={<div>Error 404</div>} />
+        <Route path='mesa/:id' element={<Mesas/>}/>
+    </Routes>
+    
+
         
     </div>
 
@@ -62,6 +72,7 @@ function App() {
     <div className="lateral">
 
         <h2>Administrador</h2>
+        <Link to="/">INICIO</Link>
         <AddmesaComponent 
         setError={setError} 
         error={error}
@@ -74,7 +85,7 @@ function App() {
         setDominio={setDominio}
         dominio={dominio}
         />
-        <a href="/">Configurar Menu de comida</a>
+        <Link to="menuconfig">CONFIGURAR MENU</Link>
         <a href="/">Gestionar Ventas</a>
         <a href="/">Pedidos en curso</a>
   </div>
