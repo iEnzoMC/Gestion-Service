@@ -1,0 +1,178 @@
+body{
+  background-color: #d1defa;
+  font-family: sans-serif, Arial, Helvetica;
+  padding: 0px;
+  margin: 0px;
+}
+
+hr{
+  margin: 0;
+}
+
+.layout{
+  width: 100%;
+  height: auto;
+
+  display: grid;
+  grid-template-areas: 
+      "header header header lateral"
+      "contener contener contener lateral"
+      "contener contener contener lateral"
+  ;
+
+  grid-template-rows: 250px 100% 100%;
+}
+
+/* HEADER */
+.header{
+  grid-area: header;
+  background: linear-gradient(90deg, #03228f 10%, #0e73e4 100%);
+  color: white;
+}
+
+
+.header >h1{
+  text-align: center;
+}
+
+
+/* LOGIN */
+.menu-login{
+  width: 250px;
+  background-color: #3d3d3d;
+  border-radius: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.menu-login > button{
+  margin-top: 10px;
+  border: 1px solid #03228f;
+  background-color: #ddd;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.menu-login > button:hover{
+  background-color: white;
+}
+
+.menu-login > span{
+  cursor: pointer;
+  position: relative;
+  left: 190px;
+  width: 50px;
+  background-color: red;
+}
+
+.menu-login > span:hover{
+  background-color: rgb(247, 62, 62);
+}
+
+
+/* CONTENER */
+.contener{
+  grid-area: contener;
+  background-color: #ddd;
+  padding: 0 10px;
+}
+
+.mesas{
+  border: 1px solid #3d3d3d;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px black;
+  margin-top: 10px;
+  padding: 10px 10px;
+}
+
+
+
+
+.mesa-config > button{
+  margin-top: 10px;
+  margin-right: 5px;
+  border: 1px solid white;
+  padding: 0 10px;
+  border-radius: 10px;
+}
+
+#edit-config-mesa:hover{
+  background-color: yellow;
+}
+
+#delete-config-mesa:hover{
+  background-color: red;
+}
+
+.pedido-mozoRequired{
+  background-color: greenyellow;
+  color: greenyellow;
+}
+
+.pedido-comidaCurso{
+  background-color: orange;
+  color: orange;  
+}
+
+/* LATERAL */
+.lateral{
+  grid-area: lateral;
+  display: flex;
+  flex-direction: column;
+  background-color: #3d3d3d;
+  border-left: 1px solid #ddd;
+  color: white;
+  text-align: center;
+}
+
+.lateral > h2{
+  margin: 10px 0 40px;
+}
+
+.lateral > a{
+  text-decoration: none;
+  color:white;
+  margin-bottom: 5px;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 5px;
+  line-height: 29px;
+}
+
+.lateral > div{
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  margin-bottom: 5px;
+}
+.lateral > div > button{
+  margin: 0;
+}
+
+.lateral > div:hover{
+  background-color: gray;
+}
+
+.lateral > a:hover{
+  background-color: gray;
+}
+
+.form-addmesa > input{
+  margin-top: 5px;
+}
+
+.form-addmesa > input[type="submit"]{
+  text-transform: uppercase;
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  background-color: rgb(0, 196, 0);
+  border-radius: 10px;
+  color: black;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.form-addmesa > input[type="submit"]:hover{
+  background-color: rgb(5, 181, 55);
+}
