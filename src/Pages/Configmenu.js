@@ -23,12 +23,13 @@ function Configmenu() {
 
     const handleAddName = e =>{
         e.preventDefault();
+        let id = new Date().getTime()
         if(names !== false){
             setNames(element =>{
-                return[...element, 1]
+                return[...element, id]
             })
         }else{
-            setNames([1])
+            setNames([id])
         }
     }
 
@@ -36,8 +37,11 @@ function Configmenu() {
         e.preventDefault();
 
 
-        console.log(names.pop())
-        // TERMINAR EL BOTON ELIMINAR
+        let id = parseFloat(e.target.name);
+        
+        let filter = names.filter(x=> x !== id);
+
+        setNames(filter)
 
     }
 
@@ -60,9 +64,9 @@ function Configmenu() {
                
                 names.map((element, i) =>{
                     return(
-                    <div className='testt'>
-                        <input key={element+i} className='hoverConfigMenu' type='text' placeholder='E.j: Pizza' name={"name"+i} />
-                        <Button key={element+i+1} onClick={e => handleRemoveName(e)} variant="outlined" color="error" className='botonEliminarConfigMenu'>
+                    <div className='testt' key={element}>
+                        <input className='hoverConfigMenu' type='text' placeholder={"E.j Pizza "+(i+1)} name={"name"+i} />
+                        <Button name={element} onClick={e => handleRemoveName(e)} variant="outlined" color="error" className='botonEliminarConfigMenu'>
                             Eliminar
                         </Button>
                     </div>
