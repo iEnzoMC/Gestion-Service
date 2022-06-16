@@ -75,7 +75,7 @@ hr{
 /* CONTENER */
 .contener{
   grid-area: contener;
-  background-color: #ddd;
+  background-color: rgb(19, 47, 76);;
   padding: 0 10px;
 }
 
@@ -273,4 +273,19 @@ hr{
   border-radius: 9px !important;
   margin-left: 5px !important;
   margin-bottom: 10px!important;
+  margin-top: 5px !important;
+}
+
+.botonCrearConfigMenu{
+  text-align: center!important;
+  background-color: rgb(9, 255, 9) !important;
+  width: 15px !important;
+  height: 30px !important;
+  margin-top: 10px !important;
+}
+
+.categorias-divisionConfigMenu{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
