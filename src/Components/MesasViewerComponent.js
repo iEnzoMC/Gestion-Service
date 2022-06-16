@@ -19,7 +19,7 @@ export const MesasViewerComponent = ({setMesas, mesas, setError, error, setDomin
 
                     <div className="mesa-info">
                     <Button style={{cursor: "default"}} variant="contained" disableElevation>
-                     Mesa #{element.number} ID: {element.id}
+                     Mesa #{element.number}
                     </Button>
                     </div>
 
