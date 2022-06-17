@@ -60,5 +60,25 @@ export const MesasViewerComponent = ({setMesas, mesas, setError, error, setDomin
     </>
 
 
+/* {datosTraidosDeLBackend.map((test) => (
+    <Accordion elevation={0}>
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon />}
+        aria-controls="panel1a/ExpandMore-content"
+        id="panel1a-header"
+      >
+        <div style={{ width: '70%' }}>
+          <Typography>{test.fileTested}</Typography>
+        </div>
+        <div style={{ width: '30%' }}>
+          <RuleResult
+            matched={test.rulesChecked.some((rule) => rule.matched)}
+          />
+        </div>
+      </AccordionSummary>
+    </Accordion>
+  ))} */
+
+
   )
 }
