@@ -7,7 +7,7 @@ import { Errors } from './helper/Errors';
 import { LSConnection } from './helper/LSConnection';
 import { Link, Route, Routes } from 'react-router-dom';
 import Configmenu from './Pages/Configmenu';
-import Mesas from './Pages/Mesa'
+import Mesa from './Pages/Mesa';
 
 
 function App() {
@@ -59,9 +59,13 @@ function App() {
             setDominio={setDominio}
             dominio={dominio}
         />} />
-        <Route path='menuconfig' element={<Configmenu/>}/>
+        <Route path='menuconfig' element={<Configmenu 
+                setError={setError} 
+                error={error}
+                setErrorMessage={setErrorMessage}
+                errorMessage={errorMessage}/>}/>
         <Route path='*' element={<div>Error 404</div>} />
-        <Route path='mesa/:id' element={<Mesas/>}/>
+        <Route path='mesa/:id' element={<Mesa/>}/>
     </Routes>
     
 
