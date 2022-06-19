@@ -85,35 +85,27 @@ hr{
   box-shadow: 0px 0px 10px black;
   margin-top: 10px;
   padding: 10px 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 
 
-
-.mesa-config > button{
-  margin-top: 10px;
-  margin-right: 5px;
-  border: 1px solid white;
-  padding: 0 10px;
-  border-radius: 10px;
+#edit-config-mesa{
+  cursor: pointer;
 }
 
-#edit-config-mesa:hover{
-  background-color: yellow;
-}
-
-#delete-config-mesa:hover{
-  background-color: red;
+#delete-config-mesa{
+  cursor: pointer;
 }
 
 .pedido-mozoRequired{
-  background-color: greenyellow;
-  color: greenyellow;
+  cursor: pointer;
 }
 
 .pedido-comidaCurso{
-  background-color: orange;
-  color: orange;  
+  cursor: pointer; 
 }
 
 /* LATERAL */

@@ -65,7 +65,9 @@ export const AddmesaComponent= ({setError, error, setErrorMessage, errorMessage,
                 let mesaBase = {
                     number: suma,
                     id: id,
-                    url: "mesa/"+id
+                    url: "mesa/"+id,
+                    peticion: false,
+                    pedido: false
                 }
 
                 if(Array.isArray(mesas)){
