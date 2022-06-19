@@ -11,7 +11,6 @@ export const MesasViewerComponent = ({setMesas, mesas, setError, error, setDomin
     <>
 
 
-
     {Array.isArray(mesas) ?
             mesas.map(element =>{
                 return(    

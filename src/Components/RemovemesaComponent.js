@@ -1,15 +1,42 @@
 import React, { useState } from 'react'
 import { LSConnection } from '../helper/LSConnection';
-import QRCode from "react-qr-code";
 import { Link } from 'react-router-dom';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CircleIcon from '@mui/icons-material/Circle';
+import Backdrop from '@mui/material/Backdrop';
+import { Imprimir } from './Imprimir';
+import { forwardRef, useRef } from "react";
+import ReactToPrint, { PrintContextConsumer } from "react-to-print";
+import QRCode from 'react-qr-code';
 
 // HACER ESTE COMPONENTE
 
+
 export const RemovemesaComponent = ({setMesas, mesas, setError, error, id, setDominio, dominio}) => {
 
+
+
+  const ref = useRef();
+  
   const [edit, setEdit] = useState(false)
 
   let urlMesa = mesas.filter(x => x.id === id)[0].url
+
+  let mesa = mesas.filter(x=> x.id === id)[0]
+
+  let peticionMesa = mesas.filter(x => x.id === id)[0].peticion
+
+  let pedidoMesa = mesas.filter(x => x.id === id)[0].pedido
+
+  let componentRef = useRef();
+
+  const ComponentToPrint = forwardRef((props, ref) => {
+    return <div ref={ref}>
+      <h1>MESA {mesa.number}</h1>
+      <QRCode ref={ref} style={{ margin: '0 auto', border: '1px solid white'}} size={132} value={urlMesa} />
+      </div>;
+  });
 
 
   
@@ -50,6 +77,12 @@ export const RemovemesaComponent = ({setMesas, mesas, setError, error, id, setDo
     setEdit(!edit)
 
   }
+  const handleClose = () =>{
+
+    setEdit(false)
+
+  }
+
 
 
 
@@ -57,21 +90,44 @@ export const RemovemesaComponent = ({setMesas, mesas, setError, error, id, setDo
   return (
 
     <>
+
+
     <div className="mesa-config">
-        <button className='pedido-comidaCurso' title='Esperando el pedido'>.</button>
-        <button className='pedido-mozoRequired' title='Responder peticion'>.</button>
-        <button id='edit-config-mesa' onClick={e => handleEdit(e)}>EDIT</button>
-        <button id='delete-config-mesa' onClick={e => handleRemove(e)}>X</button>
+        {pedidoMesa === true ? <CircleIcon className='pedido-comidaCurso' title='Esperando el pedido' sx={{color: 'orange'}} /> : <CircleIcon className='pedido-comidaCurso' title='Esperando el pedido' sx={{color: '#ccc'}} />}
+        {peticionMesa === true ? <CircleIcon className='pedido-mozoRequired' title='Responder peticion' sx={{color: 'green'}} /> : <CircleIcon className='pedido-mozoRequired' title='Responder peticion' sx={{color: '#ccc'}} />}
+        
+        <DashboardIcon id='edit-config-mesa' onClick={e => handleEdit(e)} sx={{marginLeft: '10px', color: "blue", marginTop: '10px'}}/>
+        <DeleteIcon id='delete-config-mesa' onClick={e => handleRemove(e)} sx={{color: 'red'}}/>
 
       
       {edit === true &&
-          <div style={{marginTop: "10px"}}>
+/*           <div style={{marginTop: "10px"}}>
               <hr style={{marginBottom: "10px"}} />
               <div style={{display: "flex", flexDirection: "column", textAlign:"center"}}>
                 <span><QRCode size={132} value={dominio+urlMesa} /></span>
                 <Link to={urlMesa}> Click para ver plantilla </Link>
               </div>
-         </div>
+         </div> */
+             <div>
+             <Backdrop
+               sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+               open={edit}
+               onClick={handleClose}
+             >
+                <div style={{width: '250px', height: '250px',borderRadius: '10px' , backgroundColor:'#0A1929'}}>
+                  <div style={{display: "flex", flexDirection: "column", textAlign:"center"}}>
+                    <ReactToPrint content={() => ref.current}>
+                    <PrintContextConsumer>
+                      {({ handlePrint }) => (
+                        <a onClick={handlePrint}><ComponentToPrint ref={ref} /></a>
+                      )}
+                    </PrintContextConsumer>
+                  </ReactToPrint>
+                    <Link style={{marginTop: '5px', color: 'yellow'}} to={urlMesa}> Click para ver plantilla </Link>
+                  </div>  
+                </div>            
+             </Backdrop>
+           </div>
 
       }
 
