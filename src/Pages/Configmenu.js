@@ -8,48 +8,75 @@ import Casos from '../helper/Casos';
 import Box from '@mui/material/Box';
 import Switch from '@mui/material/Switch';
 import TextField from '@mui/material/TextField';
+import MenuViewerComponent from '../Components/MenuViewerComponent';
 
 function Configmenu({setError, error, setErrorMessage, errorMessage}) {
 
     const [categorias, setCategorias] = useState(false)
+    const [categoriaGeneral, setCategoriaGeneral] = useState(false)
     const [category, setCategory] = useState(false)
+    const [newName, setNewName] = useState('nada')
+    const [names, setNames] = useState(false)
+    
+
+    const handleNewName = e =>{
+        let newname = e.target.value
+        setNewName(newname)
+    }
 
     useEffect(()=>{
-        let baseDatos = LSConnection("GET", "categorias")
-        Array.isArray(baseDatos) && setCategorias(baseDatos)
+        let baseDatos = LSConnection("GET", "categoriaGeneral")
+        Array.isArray(baseDatos) && setCategoriaGeneral(baseDatos)
         console.log(baseDatos);
     }, [])
 
-    const [checked, setChecked] = useState(false)
-
-    const handleChange = (event) => {
-        let check = event.target.checked
-        setChecked(check);
-    };
-
-    const [names, setNames] = useState(false)
     useEffect(()=>{
-        console.log(names)
+        let allCategorias = categorias
+
+        if(Array.isArray(allCategorias)) {
+
+            allCategorias.forEach(element =>{
+            element.datos = names
+            })
+
+            console.log(allCategorias);
+        }
+
     }, [names])
 
+    useEffect(() =>{
+        console.log(categorias)
+    }, [categorias])
+
+
     const handleAddName = e =>{
-        let id = new Date().getTime()
-        if(names !== false){
+        let key = new Date().getTime()
+
+        if(names.length > 0){
+
+
+            if(names.includes(newName)){
+                setError(true) 
+                setErrorMessage('Ese nombre ya fue agregado')
+                return;
+            }
             setNames(element =>{
-                return[...element, id]
+                return[...element, newName.toLowerCase()]
             })
         }else{
-            setNames([id])
+            setNames([newName.toLowerCase()])
         }
     }
 
     const handleRemoveName = e =>{
         e.preventDefault();
 
+        console.log(e.target.name);
 
-        let id = parseFloat(e.target.name);
+
+        let name = e.target.name;
         
-        let filter = names.filter(x=> x !== id);
+        let filter = names.filter(x=> x !== name);
 
         setNames(filter)
 
@@ -57,10 +84,10 @@ function Configmenu({setError, error, setErrorMessage, errorMessage}) {
 
     const handleCrearCategoria = e =>{
 
-        let baseDato = LSConnection("GET", "categorias")
+        let baseDato = LSConnection("GET", "categoriaGeneral")
         let json = {
             name: category,
-            datos: []
+            datos: [],
 
         }
 
@@ -78,16 +105,16 @@ function Configmenu({setError, error, setErrorMessage, errorMessage}) {
                 setErrorMessage("Ese nombre ya existe. Intenta con otro.")
             }else{
                 console.log("Categoria creada22 "+category);
-                setCategorias(element =>{
-                    return[...element, json]
+                setCategoriaGeneral(elemento =>{
+                    return[...elemento, json]
                 })
-                LSConnection("SAVE", "categorias", json)
+                LSConnection("SAVE", "categoriaGeneral", json)
             }
             
         }else{
             console.log("Categoria creada "+category);
-            setCategorias([json])
-            LSConnection("SAVE", "categorias", json)
+            setCategoriaGeneral([json])
+            LSConnection("SAVE", "categoriaGeneral", json)
         }
     }
 
@@ -99,30 +126,111 @@ function Configmenu({setError, error, setErrorMessage, errorMessage}) {
 
     const handleRemoveCategory = e =>{
         console.log(e.target.name);
+        e.preventDefault()
 
         let name = e.target.name
 
-        let element = categorias.filter(x => x.name !== name)
-        LSConnection("SAVE.STATIC", "categorias", element)
-        setCategorias(element)
+        let element = categoriaGeneral.filter(x => x.name !== name)
+        let element2 = false
+        Array.isArray(categorias) ? element2 = categorias.filter(x => x.name !== name) :
+        LSConnection("SAVE.STATIC", "categoriaGeneral", element)
+        setCategoriaGeneral(element)
+        setCategorias(element2)
+    }
+
+    const handleSubmit = e =>{
+        e.preventDefault();
+
+        // Obtenemos todos los datos de campos
+
+        let target = e.target
+
+        // names > contiene los nombres del menu
+        let info = target.info.value;
+        // categorias > contiene las categorias a las cual se van a asignar
+        let cel = target.celular.value;
+        let price = target.price.value;
+
+        // Comprobamos si hay categorias asignadas
+        
+        let baseDatos = LSConnection("GET", "categoriaGeneral")
+
+        let objectName = {
+            title: names,
+            info: info,
+            price: price
+        }
+        
+        if(Array.isArray(baseDatos)){
+            //Entonces si contiene categorias, vamos a agregar o colocar
+            // los names a las categorias general
+            let baseDatosGeneral = LSConnection("GET", "categoriaGeneral")
+
+            if(Array.isArray(baseDatosGeneral)){
+                categorias.forEach(element => {
+                    
+                    let encontrada = baseDatosGeneral.filter(x => x.name === element.name);
+                    if(encontrada.length > 0){
+                        encontrada[0].datos.push(objectName)
+                        let eliminar = baseDatosGeneral.filter( x => x.name !== element.name)
+                        eliminar.push(encontrada[0])
+                        LSConnection('SAVE.STATIC', 'categoriaGeneral', eliminar)
+                    }
+
+                });
+            }else{
+                let newCategorias = [];
+
+                categorias.forEach(element =>{
+                    let newObjet = {
+                        name: element.name,
+                        datos: element.datos,
+                        info: info,
+                        cel: cel,
+                        price: price
+                    }
+
+                    newCategorias.push(newObjet)
+                })
+
+                LSConnection('SAVE.STATIC', 'categoriaGeneral', newCategorias)
+                console.log(newCategorias)
+
+            }
+        }
+
     }
 
 
 
   return (
 
-
-    <form className='formulario-menu'>
+    <>
+    <form onSubmit={e => handleSubmit(e)} className='formulario-menu'>
 
         <div className='nombre-y-espesificacion'>
         
             <label>Nombre(*)</label>
-            <input type='text' placeholder='E.j: Muzza' name='nombre'/>
+            <input onChange={e => handleNewName(e)} type='text' placeholder='E.j: Muzza' name='nombre'/>
             <Fab color="primary" aria-label="add">
-            <AddIcon />
+            <AddIcon onClick={e => handleAddName(e)} />
             </Fab>
+            <div>
+            {
+                Array.isArray(names) &&
+                names.map(element => {
 
-            <label>Espesificacion(*)</label>
+                    return (
+                        <div key={element} style={{marginBottom: '4px'}}>
+                            <span style={{color: 'white', marginRight: '10px'}}>- {element}</span>
+                            <button onClick={e => handleRemoveName(e)} name={element} style={{color: 'red', background: 'black', cursor: 'pointer'}}>X</button>
+                        </div>
+                    )
+                })
+            }
+            </div>
+
+            <label>Espesificaciones(*)</label>
             <textarea type='text' placeholder='E.j: Muzza de 10 porciones' name='info'/>
         
         </div>
@@ -132,19 +240,37 @@ function Configmenu({setError, error, setErrorMessage, errorMessage}) {
             <label>Crear / Agregar Categoria(*)</label>
 
             <div className='crear-y-agregar-unirInput'>
-                <TextField id="standard-basic" variant="standard" />     
-                <Button style={{marginLeft: '5px', width: '20px'}} variant="contained" color="success">
+                <TextField onChange={e => handleCategory(e)} id="standard-basic" variant="standard" />     
+                <Button onClick={e => handleCrearCategoria(e)} style={{marginLeft: '5px', width: '20px'}} variant="contained" color="success">
                     Crear
                 </Button>
             </div>
 
             <div className='crear-y-agregar-unirPromocion'>
-                <span style={{display: 'block', marginTop: '5px'}}>Promocion</span>
-                <Switch
-                    checked={checked}
-                    onChange={handleChange}
-                    inputProps={{ 'aria-label': 'controlled' }}
-                />
+            <div>
+            {Array.isArray(categoriaGeneral) &&
+                    categoriaGeneral.map(element => {
+                        return(
+                            <div key={element.name}>
+                                
+                                <div style={{display: 'flex', flexDirection:'row', alignItems: 'center', marginBottom:'10px'}}>
+                                    <span style={{display: 'block', marginTop: '5px'}}>{element.name}</span>
+                                    <Casos 
+                                        objeto={element}
+                                        setNames={setNames}
+                                        names={names}
+                                        setCategorias={setCategorias}
+                                        categorias={categorias}
+                                    />
+                                    <button onClick={e => handleRemoveCategory(e)} name={element.name} style={{color: 'red', background: 'black', cursor: 'pointer'}}>X</button>
+                                </div>
+                            </div>
+                        )
+
+                    })
+                }
+                </div>
+
             </div>
             
 
@@ -156,7 +282,7 @@ function Configmenu({setError, error, setErrorMessage, errorMessage}) {
 
         <div className='precio-final'>
             <label>Precio Final</label>
-            <input type='number' placeholder='E.j: 50' name='celular'/>
+            <input type='number' placeholder='E.j: 50' name='price'/>
             <input type='submit' value='GUARDAR'/>
         </div>
  
@@ -164,6 +290,13 @@ function Configmenu({setError, error, setErrorMessage, errorMessage}) {
 
     </form>
 
+    <MenuViewerComponent
+        setCategoriaGeneral={setCategoriaGeneral}
+        categoriaGeneral={categoriaGeneral}
+
+    />
+
+    </>
 
   );
 }
