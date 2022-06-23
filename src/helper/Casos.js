@@ -1,29 +1,46 @@
-import {React, useState} from 'react'
+import {React, useEffect, useState} from 'react'
 import 'animate.css';
 import Switch from '@mui/material/Switch';
-import { LSConnection } from './LSConnection';
-function Casos({objeto, setNames, names}) {
+function Casos({objeto, setNames, names, setCategorias, categorias}) {
 
-    const [checked, setChecked] = useState(false)
+  const [checked, setChecked] = useState(false)
 
     const handleChange = (event) => {
         let check = event.target.checked
         setChecked(check);
+
     };
 
-    const baseDatos = LSConnection("GET", "categorias")
+    
+    useEffect(() => {
 
-    if(checked === true){
-        if(Array.isArray(baseDatos)){
-            
+          if(checked){
+            objeto.datos = names
 
-            let filtrado = baseDatos.filter(x => x.name === objeto.name)[0]
-            filtrado.datos.push("tes")
-            filtrado.datos.push("te2s")
-            console.log(filtrado);
-            console.log(names)
-        }
-    }
+            if ( Array.isArray(categorias) ) {
+              setCategorias(element => {
+                return[...element, objeto]
+              })
+            }else {
+              setCategorias([objeto])
+            }
+
+
+
+          } else {
+            if ( Array.isArray(categorias) ) {
+              let filtro = categorias.filter(x => x.name !== objeto.name)
+              setCategorias(filtro)
+            }
+          }
+
+      }, [checked])
+
+
+
+    
+
+
 
 
 

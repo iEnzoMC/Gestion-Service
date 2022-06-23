@@ -262,3 +262,21 @@ hr{
   color: white !important;
   margin: 0 !important;
 }
+
+.articuloMenuContenedor{
+  background-color: rgb(0, 30, 60);;
+  text-align: center;
+}
+
+.articuloMenuContenedor > div > h1{
+  background-color:aquamarine;
+  text-align: center;
+}
+
+.articuloMenu{
+  background-color: #e6db74;
+  margin-bottom: 10px;
+  width: 50%;
+  border-radius: 9px;
+  margin: 0 auto;
+}
