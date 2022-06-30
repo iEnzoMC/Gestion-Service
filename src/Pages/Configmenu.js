@@ -9,14 +9,18 @@ import Box from '@mui/material/Box';
 import Switch from '@mui/material/Switch';
 import TextField from '@mui/material/TextField';
 import MenuViewerComponent from '../Components/MenuViewerComponent';
+import { Alert, Stack } from '@mui/material';
+import { Completed } from '../helper/Completed';
 
 function Configmenu({setError, error, setErrorMessage, errorMessage}) {
 
-    const [categorias, setCategorias] = useState(false)
+    const [categorias, setCategorias] = useState(true)
     const [categoriaGeneral, setCategoriaGeneral] = useState(false)
     const [category, setCategory] = useState(false)
     const [newName, setNewName] = useState('nada')
     const [names, setNames] = useState(false)
+    const [completed, setCompleted] = useState(false)
+    const [completedMessage, setCompletedMessage] = useState('Has completado la operacion exitosamente')
     
 
     const handleNewName = e =>{
@@ -88,6 +92,7 @@ function Configmenu({setError, error, setErrorMessage, errorMessage}) {
         let json = {
             name: category,
             datos: [],
+            cel: ''
 
         }
 
@@ -150,6 +155,7 @@ function Configmenu({setError, error, setErrorMessage, errorMessage}) {
         // categorias > contiene las categorias a las cual se van a asignar
         let cel = target.celular.value;
         let price = target.price.value;
+        let urlImg = target.urlImg.value;
 
         // Comprobamos si hay categorias asignadas
         
@@ -158,8 +164,26 @@ function Configmenu({setError, error, setErrorMessage, errorMessage}) {
         let objectName = {
             title: names,
             info: info,
-            price: price
+            price: price,
+            cel: cel,
+            urlImg: urlImg
+            
         }
+
+        if(!Array.isArray(categorias) || !Array.isArray(names) || names.length <= 0 || price === "" || categorias.length <= 0 || names.length <= 0){
+            setError(true)
+
+            !Array.isArray(categorias) ? setErrorMessage('Por favor seleciona o crea una categoria.') : setErrorMessage('Por favor agrega un Nombre.')
+
+            names.length <= 0 && setErrorMessage('Por favor coloca un Nombre')
+            price === "" && setErrorMessage('Por favor coloca un precio')
+
+            categorias <= 0 && setErrorMessage('Por favor seleciona o crea una categoria.')
+            names <= 0 && setErrorMessage('Por favor agrega un Nombre.')
+            return;
+        }
+
+        console.log(names)
         
         if(Array.isArray(baseDatos)){
             //Entonces si contiene categorias, vamos a agregar o colocar
@@ -172,6 +196,7 @@ function Configmenu({setError, error, setErrorMessage, errorMessage}) {
                     let encontrada = baseDatosGeneral.filter(x => x.name === element.name);
                     if(encontrada.length > 0){
                         encontrada[0].datos.push(objectName)
+                        encontrada[0].cel = cel
                         let eliminar = baseDatosGeneral.filter( x => x.name !== element.name)
                         eliminar.push(encontrada[0])
                         LSConnection('SAVE.STATIC', 'categoriaGeneral', eliminar)
@@ -187,7 +212,8 @@ function Configmenu({setError, error, setErrorMessage, errorMessage}) {
                         datos: element.datos,
                         info: info,
                         cel: cel,
-                        price: price
+                        price: price,
+                        urlImg: urlImg
                     }
 
                     newCategorias.push(newObjet)
@@ -197,6 +223,10 @@ function Configmenu({setError, error, setErrorMessage, errorMessage}) {
                 console.log(newCategorias)
 
             }
+
+            setCompleted(true)
+            setCompletedMessage('El menu se registro correctamente.')
+
         }
 
     }
@@ -232,6 +262,10 @@ function Configmenu({setError, error, setErrorMessage, errorMessage}) {
 
             <label>Espesificaciones(*)</label>
             <textarea type='text' placeholder='E.j: Muzza de 10 porciones' name='info'/>
+
+            <label style={{display:'block'}}>Imagen URL</label>
+            <input type='text' name='urlImg'/>
+
         
         </div>
         
@@ -294,6 +328,15 @@ function Configmenu({setError, error, setErrorMessage, errorMessage}) {
         setCategoriaGeneral={setCategoriaGeneral}
         categoriaGeneral={categoriaGeneral}
 
+    />
+    <Completed
+        
+        setCompleted={setCompleted}
+        completed={completed}
+        
+        setCompletedMessage={setCompletedMessage}
+        completedMessage={completedMessage}
+    
     />
 
     </>

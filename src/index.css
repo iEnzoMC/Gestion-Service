@@ -263,20 +263,78 @@ hr{
   margin: 0 !important;
 }
 
+/* MENU VIEWER */
+
 .articuloMenuContenedor{
-  background-color: rgb(0, 30, 60);;
+  background-color: rgb(0, 30, 60);
   text-align: center;
+  padding: 20px;
+  margin-top: 10px;
 }
 
 .articuloMenuContenedor > div > h1{
-  background-color:aquamarine;
+  background-image:linear-gradient(147deg, #fe8a39 0%, #fd3838 74%);
   text-align: center;
+  text-transform: uppercase;
 }
 
+
 .articuloMenu{
-  background-color: #e6db74;
-  margin-bottom: 10px;
   width: 50%;
-  border-radius: 9px;
   margin: 0 auto;
+  margin-bottom: 50px;
+}
+
+.SkeletonCircularMenuViewer{
+  margin: 0 auto !important;
+}
+
+
+.card-articles{
+  background-image: linear-gradient(147deg, #fe8a39 0%, #fd3838 74%);
+}
+
+.card-footer{
+  background-color: #fd3838;
+  border-top: 1px solid #3d3d3d;
+}
+
+.card-names{
+  background: linear-gradient(34deg, rgba(55,16,83,1) 0%, rgba(162,73,190,1) 29%, rgba(33,16,83,1) 92%);
+  border: 1px solid gray;
+  color: #e6db74;
+  box-shadow: 0px 0px 10px black;
+  font-size: 27px;
+  font-family: 'Courier New', Courier, monospace;
+  text-transform: capitalize;
+  border-radius: 9px;
+}
+
+.card-names > span{
+  display: block;
+}
+
+.card-price{
+  display: block;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: 25px;
+  background-color: #fe8a39;
+  padding: 10px;
+  width: 30%;
+  margin: 0 auto;
+  margin-top: 10px;
+  border-radius: 9px;
+  color: green;
+}
+
+.category-footer{
+  background-color: #3d3d3d;
+  height: 70px;
+  text-align: center;
+  color: white;
+
+}
+
+.category-footer > div > h3{
+  margin-top: 0px;
 }
